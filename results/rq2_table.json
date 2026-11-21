@@ -1,0 +1,68 @@
+[
+ {
+  "kind": "other-subject",
+  "existing_rules": 0,
+  "median": 0.02700399349998861,
+  "p95": 0.057982531999869025
+ },
+ {
+  "kind": "other-subject",
+  "existing_rules": 100,
+  "median": 0.034993053999983204,
+  "p95": 0.08177656199995909
+ },
+ {
+  "kind": "other-subject",
+  "existing_rules": 300,
+  "median": 0.0318389379999644,
+  "p95": 0.07386605499982579
+ },
+ {
+  "kind": "other-subject",
+  "existing_rules": 1000,
+  "median": 0.03652974100009487,
+  "p95": 0.09919312100009847
+ },
+ {
+  "kind": "other-subject",
+  "existing_rules": 3000,
+  "median": 0.03191578600001321,
+  "p95": 0.07599673400000029
+ },
+ {
+  "kind": "other-subject",
+  "existing_rules": 10000,
+  "median": 0.042301676499960195,
+  "p95": 0.11481312200021421
+ },
+ {
+  "kind": "wildcard-source",
+  "existing_rules": 0,
+  "median": 0.03764303199989172,
+  "p95": 0.08487246100003176
+ },
+ {
+  "kind": "wildcard-source",
+  "existing_rules": 100,
+  "median": 0.05256688849999591,
+  "p95": 0.09152249300018411
+ },
+ {
+  "kind": "wildcard-source",
+  "existing_rules": 300,
+  "median": 0.0892819089999648,
+  "p95": 0.19040034300019215
+ },
+ {
+  "kind": "wildcard-source",
+  "existing_rules": 1000,
+  "median": 0.20297780199996396,
+  "p95": 0.3289296170000853
+ },
+ {
+  "kind": "wildcard-source",
+  "existing_rules": 3000,
+  "median": 0.4819222805000436,
+  "p95": 0.6216086100000666
+ }
+]

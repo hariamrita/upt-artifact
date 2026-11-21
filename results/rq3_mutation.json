@@ -1,0 +1,62 @@
+{
+ "n_cases": 400,
+ "seed": 21,
+ "classes": {
+  "port": {
+   "mutants": 908,
+   "rejected": 858,
+   "witness_confirmed": 858,
+   "sampler_found": 361,
+   "flagged_incomplete": 0,
+   "missed": 0
+  },
+  "prefix": {
+   "mutants": 908,
+   "rejected": 859,
+   "witness_confirmed": 859,
+   "sampler_found": 207,
+   "flagged_incomplete": 0,
+   "missed": 0
+  },
+  "direction": {
+   "mutants": 441,
+   "rejected": 419,
+   "witness_confirmed": 419,
+   "sampler_found": 171,
+   "flagged_incomplete": 0,
+   "missed": 0
+  },
+  "fail_open": {
+   "mutants": 908,
+   "rejected": 908,
+   "witness_confirmed": 908,
+   "sampler_found": 908,
+   "flagged_incomplete": 0,
+   "missed": 0
+  },
+  "subject": {
+   "mutants": 908,
+   "rejected": 908,
+   "witness_confirmed": 908,
+   "sampler_found": 551,
+   "flagged_incomplete": 0,
+   "missed": 0
+  },
+  "drop_atom": {
+   "mutants": 866,
+   "rejected": 0,
+   "witness_confirmed": 0,
+   "sampler_found": 0,
+   "flagged_incomplete": 757,
+   "missed": 0
+  },
+  "shadowing": {
+   "mutants": 908,
+   "rejected": 908,
+   "witness_confirmed": 908,
+   "sampler_found": 908,
+   "flagged_incomplete": 0,
+   "missed": 0
+  }
+ }
+}

@@ -1,0 +1,102 @@
+{
+ "n": 1000,
+ "c": 0.5,
+ "seed": 31,
+ "summary": {
+  "B1": {
+   "cases": 1000,
+   "conflict_cases": 519,
+   "surfaced": 0,
+   "obl_loss": 316,
+   "unsafe": 97,
+   "ok_admitted": 481,
+   "ok_cases": 481
+  },
+  "B2": {
+   "cases": 1000,
+   "conflict_cases": 519,
+   "surfaced": 172,
+   "obl_loss": 316,
+   "unsafe": 31,
+   "ok_admitted": 481,
+   "ok_cases": 481
+  },
+  "UPT": {
+   "cases": 1000,
+   "conflict_cases": 519,
+   "surfaced": 519,
+   "obl_loss": 0,
+   "unsafe": 0,
+   "ok_admitted": 481,
+   "ok_cases": 481
+  }
+ },
+ "surfaced_by_kind": {
+  "B1": {
+   "boundary": [
+    0,
+    106
+   ],
+   "trust": [
+    0,
+    97
+   ],
+   "unplaceable": [
+    0,
+    97
+   ],
+   "suite": [
+    0,
+    108
+   ],
+   "availability": [
+    0,
+    111
+   ]
+  },
+  "B2": {
+   "boundary": [
+    106,
+    106
+   ],
+   "trust": [
+    66,
+    97
+   ],
+   "unplaceable": [
+    0,
+    97
+   ],
+   "suite": [
+    0,
+    108
+   ],
+   "availability": [
+    0,
+    111
+   ]
+  },
+  "UPT": {
+   "boundary": [
+    106,
+    106
+   ],
+   "trust": [
+    97,
+    97
+   ],
+   "unplaceable": [
+    97,
+    97
+   ],
+   "suite": [
+    108,
+    108
+   ],
+   "availability": [
+    111,
+    111
+   ]
+  }
+ }
+}

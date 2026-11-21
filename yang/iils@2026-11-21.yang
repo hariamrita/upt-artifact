@@ -1,0 +1,124 @@
+module iils {
+  yang-version 1.1;
+  namespace "urn:example:params:xml:ns:yang:iils";
+  prefix iils;
+
+  import ietf-yang-types { prefix yang; }
+  import ietf-inet-types { prefix inet; }
+
+  organization "Amrita Center for Cybersecurity Systems and Networks";
+  contact "Hari N. N.";
+  description
+    "Intermediate Intent Language Specification (IILS): cross-domain
+     Zero Trust policies with a lattice semantics (Section IV).";
+
+  revision 2026-11-21 { description "Initial revision."; }
+
+  feature syscall-boundary {
+    description "Atom-level system-call allow-lists (enforced by eBPF).";
+  }
+
+  identity trust-anchor { description "Base identity for trust anchors."; }
+  identity mud   { base trust-anchor; description "RFC 8520 MUD declaration."; }
+  identity wkld  { base trust-anchor; description "Workload identity from behavioural telemetry."; }
+  identity euicc { base trust-anchor; description "Hardware-rooted eUICC credential."; }
+
+  identity cipher-suite { description "Base identity for AEAD suites."; }
+  identity aes-128-gcm { base cipher-suite; description "AES-128-GCM."; }
+  identity aes-256-gcm { base cipher-suite; description "AES-256-GCM."; }
+  identity chacha20-poly1305 { base cipher-suite; description "ChaCha20-Poly1305."; }
+
+  typedef domain-ref { type string; description "Registered domain name."; }
+
+  typedef assurance-level {
+    type enumeration {
+      enum AL1 { value 1; description "Spoofable identifier."; }
+      enum AL2 { value 2; description "Software-held credential."; }
+      enum AL3 { value 3; description "Hardware-rooted key."; }
+    }
+    description "Ordinal identity assurance (Definition 5).";
+  }
+
+  list iils-policy {
+    key "policy-id";
+    description "One IILS policy (Definition 1).";
+    leaf policy-id { type yang:uuid; description "Policy identifier."; }
+    leaf version { type uint64; mandatory true; description "Monotonic version; stale versions are rejected."; }
+    leaf source-domain { type domain-ref; description "Domain that issued the policy."; }
+    leaf target-domain { type domain-ref; description "Domain owning the protected resource."; }
+
+    container identity-attestation {
+      description "I_attr.";
+      leaf anchor-type { type identityref { base trust-anchor; } mandatory true; description "Trust anchor kappa."; }
+      choice subjects {
+        mandatory true;
+        description "Subject set S.";
+        leaf-list subject { type string; description "Salted hashes of subject identifiers."; }
+        leaf subject-class { type string; description "A class, e.g., all devices declaring one MUD URL."; }
+      }
+    }
+
+    container communication-boundary {
+      description "C_bound: a finite set of boundary atoms.";
+      list atom {
+        key "atom-id";
+        min-elements 1;
+        description "Boundary atom <R_b, Pi_b, [l_b,u_b], delta_b>.";
+        leaf atom-id { type uint32; description "Atom identifier."; }
+        leaf resource { type string; mandatory true; description "URN, DNS name or IP prefix; resolved at translation time."; }
+        leaf-list protocol {
+          type enumeration { enum tcp; enum udp; }
+          min-elements 1;
+          description "Protocol set Pi_b.";
+        }
+        container port-range {
+          description "Port interval.";
+          leaf lower { type inet:port-number; mandatory true; description "l_b."; }
+          leaf upper { type inet:port-number; mandatory true; description "u_b."; }
+          must "upper >= lower" { error-message "Empty port interval."; }
+        }
+        leaf direction {
+          type enumeration { enum in; enum out; enum bi; }
+          default bi;
+          description "delta_b.";
+        }
+        leaf-list syscall-allow {
+          if-feature syscall-boundary;
+          type string;
+          description "Permitted system calls.";
+        }
+        leaf enforced-by { type domain-ref; config false; description "Set by placement (Section V-D)."; }
+      }
+    }
+
+    container enforcement-action {
+      description "E_act: obligations.";
+      leaf-list cipher-suite { type identityref { base cipher-suite; } description "Acceptable suites E; empty means no requirement."; }
+      leaf isolation-level { type enumeration { enum low; enum med; enum high; } default low; description "iota."; }
+      leaf anomaly-response { type enumeration { enum log; enum alert; enum limit; enum quarantine; } default log; description "rho."; }
+      leaf max-lifetime { type uint32; units "seconds"; description "lambda; absent means unbounded."; }
+      container admission {
+        description "Admission requirement alpha.";
+        leaf min-assurance { type assurance-level; default AL1; description "a_min."; }
+        leaf min-score { type decimal64 { fraction-digits 3; range "0..1"; } default 0; description "theta."; }
+      }
+    }
+
+    container performance {
+      description "Q: negotiated, not part of the lattice.";
+      leaf mtd-interval { type uint32; units "milliseconds"; description "Largest tolerated shuffle interval U_i."; }
+      leaf min-availability { type decimal64 { fraction-digits 5; range "0..1"; } description "eta_min."; }
+      leaf availability-hard { type boolean; default false; description "Deny if the bound cannot be met."; }
+    }
+
+    container trust-context {
+      description "T_ctx (Definition 5).";
+      leaf assurance-level { type assurance-level; mandatory true; description "a."; }
+      leaf beta-alpha { type decimal64 { fraction-digits 3; } mandatory true; description "alpha_s."; }
+      leaf beta-beta { type decimal64 { fraction-digits 3; } mandatory true; description "beta_s."; }
+      leaf evaluated-at { type yang:date-and-time; mandatory true; description "t_0."; }
+      leaf evaluated-by { type domain-ref; mandatory true; description "d_src."; }
+      leaf signature { type binary; mandatory true; description "Signature of d_src over the context."; }
+    }
+  }
+}
