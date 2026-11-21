@@ -1,0 +1,4 @@
+z3-solver==5.4.1.0
+matplotlib==3.11.2
+pyang==2.7.1
+pytest==9.1.1
